@@ -2,23 +2,22 @@ package authz
 
 default allow = false
 
-role := data.user_roles[input.user]
+roles := data.users[input.user].roles
 
 allow {
-  role == "admin"
+  "admin" in roles
 }
 
 allow {
-  role == "change_specialist_1"
+  "change_specialist_1" in roles
 }
 
 allow {
-  role == "change_specialist_2"
+  "change_specialist_2" in roles
   input.change_request.status != "CLOSED"
 }
 
 allow {
-  role == "change_specialist_3"
+  "change_specialist_3" in roles
   input.change_request.status == "DRAFTED"
 }
-
