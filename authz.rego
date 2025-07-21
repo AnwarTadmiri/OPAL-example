@@ -2,13 +2,10 @@ package authz
 
 default allow = false
 
-# Helper function: check if user has role
 has_role(user, role) = true if {
   some i
   data.users[user].roles[i] == role
 }
-
-# Rules using `if` syntax:
 
 allow if has_role(input.user, "admin")
 
