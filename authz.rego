@@ -2,20 +2,30 @@ package authz
 
 default allow = false
 
-allow {
-  "admin" in data.users[input.user].roles
+# Helper rule to check if a user has a role
+has_role(user, role) {
+  some i
+  data.users[user].roles[i] == role
 }
 
+# Allow if user is admin
 allow {
-  "change_specialist_1" in data.users[input.user].roles
+  has_role(input.user, "admin")
 }
 
+# Allow if user is change_specialist_1
 allow {
-  "change_specialist_2" in data.users[input.user].roles
+  has_role(input.user, "change_specialist_1")
+}
+
+# Allow if user is change_specialist_2 and request is not CLOSED
+allow {
+  has_role(input.user, "change_specialist_2")
   input.change_request.status != "CLOSED"
 }
 
+# Allow if user is change_specialist_3 and request is DRAFTED
 allow {
-  "change_specialist_3" in data.users[input.user].roles
+  has_role(input.user, "change_specialist_3")
   input.change_request.status == "DRAFTED"
 }
