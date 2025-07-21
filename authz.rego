@@ -5,19 +5,27 @@ default allow = false
 roles := data.users[input.user].roles
 
 allow {
-  "admin" in roles
+  some role
+  role := data.users[input.user].roles[_]
+  role == "admin"
 }
 
 allow {
-  "change_specialist_1" in roles
+  some role
+  role := data.users[input.user].roles[_]
+  role == "change_specialist_1"
 }
 
 allow {
-  "change_specialist_2" in roles
+  some role
+  role := data.users[input.user].roles[_]
+  role == "change_specialist_2"
   input.change_request.status != "CLOSED"
 }
 
 allow {
-  "change_specialist_3" in roles
+  some role
+  role := data.users[input.user].roles[_]
+  role == "change_specialist_3"
   input.change_request.status == "DRAFTED"
 }
