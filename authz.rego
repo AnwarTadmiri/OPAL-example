@@ -8,20 +8,20 @@ has_role(user, role) = true if {
   data.users[user].roles[i] == role
 }
 
-allow = true if{
+allow if{
   has_role(input.user, "admin")
 }
 
-allow = true if{
+allow if{
   has_role(input.user, "change_specialist_1")
 }
 
-allow = true if{
+allow if{
   has_role(input.user, "change_specialist_2")
   input.change_request.status != "CLOSED"
 }
 
-allow = true if{
+allow if{
   has_role(input.user, "change_specialist_3")
   input.change_request.status == "DRAFTED"
 }
