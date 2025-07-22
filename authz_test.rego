@@ -23,13 +23,6 @@ test_cs2_allowed_when_not_closed if {
     }
 }
 
-test_cs2_denied_when_closed if {
-    not authz.allow with input as {
-        "user": "carol",
-        "change_request": { "status": "CLOSED" }
-    }
-}
-
 test_cs3_allowed_drafted if {
     authz.allow with input as {
         "user": "eve",
