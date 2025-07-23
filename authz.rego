@@ -9,6 +9,10 @@ has_role(user, role) {
 }
 
 allow {
+  has_role(input.user, "admin")
+}
+
+allow {
   has_role(input.user, "change_specialist_1")
 }
 
