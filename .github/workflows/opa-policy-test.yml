@@ -1,0 +1,31 @@
+name: OPA Policy Tests
+
+on:
+  push:
+    paths:
+      - 'authz.rego'
+      - 'authz_test.rego'
+      - 'data.json'
+  pull_request:
+    paths:
+      - 'authz.rego'
+      - 'authz_test.rego'
+      - 'data.json'
+
+jobs:
+  opa-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install OPA CLI
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/v0.11.0/opa_darwin_amd64
+          chmod +x opa
+          sudo mv opa /usr/local/bin/opa
+
+      - name: Run OPA tests
+        run: |
+          opa test . --verbose
